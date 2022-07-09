@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: configmap-vol
+          mountPath: /etc/config
+        - name: secret-vol
+          mountPath: /etc/mysecret
+          
+
+  volumes:
+    - name: configmap-vol
+      configMap:
+        name: demo-configmap
+    - name: secret-vol
+      secret:
+        secretName: demo-secret

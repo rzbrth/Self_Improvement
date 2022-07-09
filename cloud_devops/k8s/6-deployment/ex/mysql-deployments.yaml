@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: docker-mysql
+        image: mysql
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        env:
+         - name: MYSQL_DATABASE
+           value: "mydb"
+         - name: MYSQL_ROOT_PASSWORD
+           value: Lucifer
+         - name: MYSQL_ROOT_HOST
+           value: '%'
+

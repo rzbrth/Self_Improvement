@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-mysql
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+        - name: mysql-initdb-config-vol
+          configMap:
+            name: mysql-initdb-config
+      containers:
+      - name: docker-mysql
+        image: mysql
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        env:
+         - name: MYSQL_DATABASE
+           value: "mydb"
+         - name: MYSQL_ROOT_PASSWORD
+           value: Lucifer
+         - name: MYSQL_ROOT_HOST
+           value: '%'
+        volumeMounts:
+          - name: mysql-data
+            mountPath: /var/lib/mysql
+          - name: mysql-initdb-config-vol
+            mountPath: /docker-entrypoint-initdb.d
+            
+
+

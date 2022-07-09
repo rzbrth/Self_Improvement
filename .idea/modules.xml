@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Self_Improvement.iml" filepath="$PROJECT_DIR$/Self_Improvement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/books/books.iml" filepath="$PROJECT_DIR$/books/books.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud_devops/cloud_devops.iml" filepath="$PROJECT_DIR$/cloud_devops/cloud_devops.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dummy-service/dummy-service.iml" filepath="$PROJECT_DIR$/dummy-service/dummy-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dummy-services/dummy-services.iml" filepath="$PROJECT_DIR$/dummy-services/dummy-services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-interview/java-interview.iml" filepath="$PROJECT_DIR$/java-interview/java-interview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my_plans/my_plans.iml" filepath="$PROJECT_DIR$/my_plans/my_plans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/system_design/system_design.iml" filepath="$PROJECT_DIR$/system_design/system_design.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,14 @@
+apiVersion: v1 
+kind: ConfigMap
+metadata:
+  name: demo-configmap
+data:
+  initdb.sql: 
+          TRUNCATE TABLE  metadata;
+          INSERT INTO metadata (id, name, description) VALUES (3, 'Lenovo', 'Laptop');
+          INSERT INTO metadata (id, name, description) VALUES (4, 'LG', 'Telivision');
+  keys:
+      Lorem ipsum sit Dolar amet
+      Lorem ipsum sit Dolar amet
+      Lorem ipsum sit Dolar amet
+      Lorem ipsum sit Dolar amet

@@ -1,0 +1,58 @@
+version: '3'
+services:
+    docker-mysql:
+        container_name: docker-mysql
+        image: mysql
+        restart: always
+        environment: 
+            MYSQL_DATABASE: mydb
+            MYSQL_ROOT_PASSWORD: Lucifer
+            MYSQL_ROOT_HOST: '%'
+        volumes:
+            - ./sql:/docker-entrypoint-initdb.d
+        ports:
+            - 6666:3306
+        networks:
+            - spring-cloud-network
+        healthcheck:
+            test: "/usr/bin/mysql --user=root --password=Lucifer --execute \"SHOW DATABASES \""
+            interval: 4s
+            timeout: 20s
+            retries: 5
+    metadata-service:
+        container_name: metadata-service
+        build:
+          context: metadata-service
+          dockerfile: Dockerfile
+        image: metadata-service
+        restart: on-failure
+        ports: 
+            - 10666:8090
+        networks:
+            - spring-cloud-network
+        environment: 
+            WAIT_HOSTS: mysql:3306
+            spring.datasource.url: "jdbc:mysql://docker-mysql:3306/mydb"
+        depends_on: 
+            - docker-mysql 
+    hello-service:
+        container_name: hello-service
+        build:
+          context: hello
+          dockerfile: Dockerfile
+        image: hello-service
+        #image: rajibrath/hello:v1
+        restart: on-failure
+        ports: 
+            - 10555:8080
+        networks:
+            - spring-cloud-network
+        environment: 
+            WAIT_HOSTS: mysql:3306
+        depends_on: 
+            - docker-mysql
+            - metadata-service
+networks:
+    spring-cloud-network:
+        driver: bridge
+        

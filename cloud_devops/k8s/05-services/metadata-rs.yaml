@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: metadata-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metadata
+  template:
+    metadata:
+      labels:
+        app: metadata
+    spec:
+      containers:
+        - name: metadata-service
+          image: rajibrath/metadata-service:latest
+          resources:
+             limits:
+                memory: "128Mi"
+                cpu: "500m"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8090
+            initialDelaySeconds: 40
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/info
+              port: 8090
+            initialDelaySeconds: 40
+            periodSeconds: 3            
+          env:
+            - name: app.version
+              value: V3
+            - name: spring.datasource.url
+              value: "jdbc:mysql://mysql-service:3306/mydb"
