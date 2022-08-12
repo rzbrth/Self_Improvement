@@ -26,13 +26,14 @@ public class InOrderSuccessor {
     public static void main(String[] args) {
 
         BinaryTree tree = new BinaryTree();
-        Node root = new Node(10);
+        Node root = new Node(6);
         tree.insertRec(5, root);
         tree.insertRec(15, root);
         tree.insertRec(8, root);
-
-        Node result = InOrderSuccessor.getInOrderSucc(root, 15);
-        System.out.println("Inorder successor is:->" + result != null ? result.data : result);
+        tree.insertRec(6, root);
+        Node result = InOrderSuccessor.getInOrderSucc(root, 5);
+        System.out.println("Inorder successor is:->");
+        System.out.println(result != null ? result.data : null);
     }
 
 }

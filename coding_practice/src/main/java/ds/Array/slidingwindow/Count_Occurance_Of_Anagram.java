@@ -23,15 +23,16 @@ public class Count_Occurance_Of_Anagram {
 
         String[] arr = text.split("");
 
-        Arrays.stream(matcher.split("")).forEach(x -> history.put(x, history.getOrDefault(x, 0) + 1));
+        Arrays.stream(matcher.split(""))
+                .forEach(x -> history.put(x, history.getOrDefault(x, 0) + 1));
         int count = history.size();
 
         while (j < arr.length) {
             // start of calculations
             // decrease the character count if present in map
             if (history.containsKey(arr[j])) {
-                history.put(arr[j], history.get(arr[j]) - 1);
                 temp.add(arr[j]);
+                history.put(arr[j], history.get(arr[j]) - 1);
             }
             // Update count if value is 0
             if (history.get(arr[j]) != null && history.get(arr[j]) == 0) {

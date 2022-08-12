@@ -14,7 +14,7 @@ public class FindLoopInLinkedList {
 		}
 		Node fast = head.next;
 		Node slow = head;
-		while (fast != null && fast.next != null & slow != null) {
+		while (fast != null && fast.next != null && slow != null) {
 			if (fast == slow) {
 				return true;
 			}

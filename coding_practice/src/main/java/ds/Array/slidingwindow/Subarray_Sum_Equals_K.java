@@ -7,9 +7,8 @@ package ds.Array.slidingwindow;
 
 public class Subarray_Sum_Equals_K {
 
-    public static void main(String[] args)
-    {
-        int arr[] = { 1,2,3};
+    public static void main(String[] args) {
+        int arr[] = {1, 2, 3};
         int k = 3;
         int n = arr.length;
         int res = 0;

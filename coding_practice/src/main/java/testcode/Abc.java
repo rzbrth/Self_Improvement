@@ -1,6 +1,7 @@
 package testcode;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.IntStream;
 
 public class Abc {
@@ -39,7 +40,13 @@ public class Abc {
 		s.add(a);
 		s.add(b);
 		System.out.println(s.size());
-
+		TreeSet<String> set=new TreeSet<String>();
+		set.add("Ravi");
+		set.add("Vijay");
+		set.add("Ravi");
+		set.add("Ajay");
+		set.add(null);
+		System.out.println(set.size());
 	}
 
 }

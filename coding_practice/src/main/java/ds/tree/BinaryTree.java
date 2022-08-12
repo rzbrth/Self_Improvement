@@ -1,5 +1,8 @@
 package ds.tree;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BinaryTree {
 
     public Node insertRec(int value, Node root) {
@@ -115,12 +118,40 @@ public class BinaryTree {
 
     }
 
+    public Node balanceBST(Node root) {
+        List<Integer> arr = new LinkedList<>();
+        sortInorder(root, arr);
+        //Collections.sort(arr);
+        return sortedArrayToBST(arr, 0, arr.size() - 1);
+    }
+
+    public void sortInorder(Node node, List<Integer> arr) {
+        if (node != null) {
+            sortInorder(node.left, arr);
+            arr.add(node.data);
+            sortInorder(node.right, arr);
+        }
+    }
+
+    public Node sortedArrayToBST(List<Integer> sortedArray, int start, int end) {
+
+        if (start > end) {
+            return null;
+        }
+        int mid = (start + end) / 2;
+
+        Node root = new Node(sortedArray.get(mid));
+        root.left = sortedArrayToBST(sortedArray, start, mid - 1);
+        root.right = sortedArrayToBST(sortedArray, mid + 1, end);
+        return root;
+    }
+
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
         Node root = new Node(10);
-        tree.insertRec(5,root);
-        tree.insertRec(15,root);
-        tree.insertRec(8,root);
+        tree.insertRec(5, root);
+        tree.insertRec(15, root);
+        tree.insertRec(8, root);
 
 
         System.out.println("Is balanced : " + tree.checkBST(root));
@@ -131,10 +162,15 @@ public class BinaryTree {
         System.out.println("Preorder traversal of binary tree is ");
         tree.printPreOrder(root);
 
-        System.out.println("Searching for node with data 15: isFound-"+tree.containsRec(15,root));
+        System.out.println("Searching for node with data 15: isFound-" + tree.containsRec(15, root));
+
+        System.out.println("Is balanced  : " + tree.checkBST(root));
+
+        Node node = tree.balanceBST(root);
+        System.out.println("Is balanced after balancing : " + tree.checkBST(node));
 
         tree.reverseBST(root);
-        System.out.println("Is balanced : " + tree.checkBST(root));
+        System.out.println("Is balanced after reversal: " + tree.checkBST(root));
 
     }
 }

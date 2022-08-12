@@ -91,7 +91,6 @@ public class BalancedParentheses {
 	 * Approach 2
 	 */
 	public static boolean isBalanced3(String s) {
-
 		Stack<Character> a = new Stack<>();
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '[') {

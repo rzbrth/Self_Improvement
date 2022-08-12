@@ -3,6 +3,7 @@ package ds.other;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MergeTwoSortedArray {
@@ -25,6 +26,7 @@ public class MergeTwoSortedArray {
 		Integer[] data = Stream.concat(Arrays.stream(a).boxed(), Arrays.stream(b).boxed()).sorted().distinct()
 				.toArray(Integer[]::new);
 		Arrays.asList(data).stream().forEach(System.out::println);
+		Integer[] integers = Stream.concat(IntStream.of(a).boxed(), IntStream.of(b).boxed()).sorted().distinct().toArray(Integer[]::new);
 	}
 	public static void main(String[] args) {
 		int a[] = { 1, 3, 5, 7 }, b[] = { 2, 4, 6, 8 };

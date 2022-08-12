@@ -42,7 +42,6 @@ public class Max_Number_Of_All_SubArray {
 				j++;
 			}
 		}
-
 		return res.stream().filter(Objects::nonNull).mapToInt(Integer::intValue).toArray();
 	}
 }

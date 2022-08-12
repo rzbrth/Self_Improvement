@@ -38,7 +38,7 @@ public class TwoSum {
 
 	public static void main(String args[]) {
 		int A[] = {2,7,11,15};
-        int sum = 9;
+        int sum = 13;
         int[] res=twoSum(A,sum);
         for(int x: res) {
         	System.out.println(x);

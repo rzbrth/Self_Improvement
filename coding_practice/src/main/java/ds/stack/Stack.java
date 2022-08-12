@@ -25,8 +25,8 @@ public class Stack<T> {
 	}
 
 	public T peek() {
-		if (top == null) {
-			throw new RuntimeException("top is null");
+		if (isEmpty()) {
+			throw new RuntimeException("stack is empty");
 		}
 		return top.data; // may throw exception
 	}

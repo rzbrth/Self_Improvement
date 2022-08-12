@@ -35,7 +35,6 @@ public class AnagramCount {
             if (araAnagram(word, s))
                 res++;
         }
-
         return res;
     }
 
