@@ -1,7 +1,9 @@
 package ds.tree;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class BinaryTree {
 
@@ -52,7 +54,6 @@ public class BinaryTree {
         printInOrder(node.left);
         System.out.println(node.data + " ");
         printInOrder(node.right);
-
     }
 
     public void printPreOrder(Node node) {// root, left, right
@@ -63,7 +64,6 @@ public class BinaryTree {
         System.out.println(node.data + " ");
         printPreOrder(node.left);
         printPreOrder(node.right);
-
     }
 
     public void printPostOrder(Node node) {// left, right, root
@@ -74,6 +74,29 @@ public class BinaryTree {
         printPostOrder(node.left);
         printPostOrder(node.right);
         System.out.println(node.data + " ");
+    }
+
+    public void printLevelOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                node = queue.remove();
+                System.out.println(node.data + " ");
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+
+            }
+        }
     }
 
     public boolean checkBST(Node root) {
@@ -105,8 +128,7 @@ public class BinaryTree {
         reverseBST(root.right);
     }
 
-
-    private int getLeafCount(Node node) {
+    public int getLeafCount(Node node) {
 
         if (node == null) {
             return 0;
@@ -116,6 +138,47 @@ public class BinaryTree {
             return getLeafCount(node.left) + getLeafCount(node.right);
         }
 
+    }
+
+    public static int sum(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return node.data + sum(node.left) + sum(node.right);
+    }
+
+    public static int size(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + size(node.left) + size(node.right);
+    }
+
+    public static int max(Node node) {
+        if (node == null) {
+            return Integer.MIN_VALUE;
+        }
+        int leftMax = max(node.left);
+        int rightMax = max(node.right);
+        return Math.max(node.data, Math.max(leftMax, rightMax));
+    }
+
+    public static int heightOfEdges(Node node) {
+        if (node == null) {
+            return -1; // -1 for edge , 0 for node
+        }
+        int leftHeight = heightOfEdges(node.left);
+        int rightHeight = heightOfEdges(node.right);
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    public static int heightOfNodes(Node node) {
+        if (node == null) {
+            return 0; // 1 for edge , 0 for node
+        }
+        int leftHeight = heightOfNodes(node.left);
+        int rightHeight = heightOfNodes(node.right);
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
     public Node balanceBST(Node root) {
@@ -146,13 +209,85 @@ public class BinaryTree {
         return root;
     }
 
+    public Node remove(Node node, int data) {
+
+        if (node == null) {
+            return null;
+        }
+        if (data > node.data) {
+            node.right = remove(node.right, data);
+        } else if (data < node.data) {
+            node.left = remove(node.left, data);
+        } else {
+            // data == node.data
+            if (node.left != null && node.right != null) {
+                // find max element among left child
+                // replace node with the left max
+                // delete left max from left subtree
+                int leftMax = leftMax(node.left);
+                node.data = leftMax;
+                node.left = remove(node.left, leftMax);
+
+            } else if (node.left != null) {
+                return node.left;
+            } else if (node.right != null) {
+                return node.right;
+            } else {
+                return null;
+            }
+        }
+        return node;
+    }
+
+    private static int leftMax(Node node) {
+
+        if (node.right != null) {
+            return node.right.data;
+        } else {
+            return node.data;
+        }
+    }
+
+    static Node predecessor;
+    static Node successor;
+    static int state;
+
+    //10,5,3,8,15
+    public static void predecessorAndSuccessor(Node node, int data) {
+
+        if (node == null) {
+            return;
+        }
+        if (state == 0) {
+            if (node.data == data) {
+                state = 1;
+            } else {
+                predecessor = node;
+            }
+        } else if (state == 1) {
+            successor = node;
+            state = 2;
+        }
+        predecessorAndSuccessor(node.left, data);
+        predecessorAndSuccessor(node.right, data);
+    }
+
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
         Node root = new Node(10);
         tree.insertRec(5, root);
         tree.insertRec(15, root);
         tree.insertRec(8, root);
+        tree.insertRec(3, root);
 
+        System.out.println(BinaryTree.heightOfEdges(root));
+        System.out.println(BinaryTree.heightOfNodes(root));
+
+        BinaryTree.predecessorAndSuccessor(root, 10);
+        System.out.println("predecessor");
+        System.out.println(BinaryTree.predecessor != null ? BinaryTree.predecessor.data : null);
+        System.out.println("successor");
+        System.out.println(BinaryTree.successor != null ? BinaryTree.successor.data : null);
 
         System.out.println("Is balanced : " + tree.checkBST(root));
         System.out.println("\nInorder traversal of binary tree is ");
@@ -160,6 +295,11 @@ public class BinaryTree {
         System.out.println("\nPostorder traversal of binary tree is ");
         tree.printPostOrder(root);
         System.out.println("Preorder traversal of binary tree is ");
+        tree.printPreOrder(root);
+        System.out.println("Level order traversal of binary tree is ");
+        tree.printLevelOrder(root);
+
+        tree.remove(root, 5);
         tree.printPreOrder(root);
 
         System.out.println("Searching for node with data 15: isFound-" + tree.containsRec(15, root));
@@ -171,7 +311,6 @@ public class BinaryTree {
 
         tree.reverseBST(root);
         System.out.println("Is balanced after reversal: " + tree.checkBST(root));
-
     }
 }
 

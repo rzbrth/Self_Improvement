@@ -16,7 +16,6 @@ public class InOrderSuccessor {
 
         }
 
-
         return successor;
     }
 
